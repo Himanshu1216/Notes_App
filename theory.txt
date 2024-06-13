@@ -1,0 +1,15 @@
+
+
+//video - 8
+currently we are starting frontend and backend server separately. is there any way to start both at same time?
+npm i concurrently
+
+then change the scripts in package.json of root folder
+
+ "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon backend/server.js", // Adjust the path to your server file
+    "client": "npm start --prefix frontend" // Adjust the path to your frontend folder
+  },
+
+npm run dev to run the both

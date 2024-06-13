@@ -2,16 +2,41 @@ import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import MainScreen from "../MainScreen/MainScreen";
 import { Link } from "react-router-dom";
 import './MyNotes.css'
-import notes from "../../data/notes";
+// import notes from "../../data/notes";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 
-const deleteHandler = (id) => {
-    if(window.confirm("Are you sure?")) {
-
-    }
-}
 
 const MyNotes = () => {
+
+    const [notes, setNotes] = useState([]);
+
+    const deleteHandler = (id) => {
+        if(window.confirm("Are you sure?")) {
+    
+        }
+    }
+
+    const fetchNotes = async() => {
+        const {data} = await axios.get('http://localhost:3001/api/notes');
+        // console.log(data);
+        setNotes(data);
+    }
+
+    //react hook which is fired up when the component inside it gets rendered.
+    // for ex when we open myNotes page and it gets rendered completely then the fn inside useEffect will be fired up.
+    // as soon as our page will get render we will call our api
+
+    //our frontend and backend should be on same domain and not on different domain
+    // to fix this we used cors in server.js which will ensure that both are on same domain.
+
+    useEffect(() => {
+        //api call
+        // we can't directly define fn inside
+        fetchNotes();
+    }, [])
+
     return (
     <MainScreen title="Welcome back Himanshu..">
       <Link to="createnote">
@@ -20,7 +45,8 @@ const MyNotes = () => {
         </Button>
       </Link>
       {notes.map((note) => (
-        <Accordion defaultActiveKey={["0"]}>
+        //although not necessary but giving key as each child items of a map or list should have unique keys.
+        <Accordion defaultActiveKey={["0"]} key={note._id}> 
           <Accordion.Item eventkey="0">
             <Card style={{ margin: 10 }}>
               <Card.Header style={{ display: "flex" }}>

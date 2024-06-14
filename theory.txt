@@ -13,3 +13,6 @@ then change the scripts in package.json of root folder
   },
 
 npm run dev to run the both
+
+video-9
+mongoose - it provides queries and everything to connect our express server with mongodb
